@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Employee Management System</title>
+
+
+  <!-- Google Fonts -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="JsFinalTask.css"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="wrap">
+
+
+    <!-- ==================================================
+         HEADER
+    ================================================== -->
+
+    <header class="masthead">
+
+      <h1>
+        Employee Management System
+      </h1>
+
+
+      <div class="clock">
+
+        Today
+
+        <strong id="todayDate">
+          —
+        </strong>
+
+        <span id="todayTime">
+          —
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         STATUS
+    ================================================== -->
+
+    <div id="status">
+      Loading employees...
+    </div>
+
+
+    <!-- ==================================================
+         DASHBOARD STATS
+    ================================================== -->
+
+    <section
+      class="stats"
+      aria-label="Dashboard summary"
+    >
+
+      <div class="stat">
+
+        <span>
+          Employees shown
+        </span>
+
+        <b id="statCount">
+          0
+        </b>
+
+      </div>
+
+
+      <div class="stat money">
+
+        <span>
+          Total salary
+        </span>
+
+        <b id="statTotal">
+          ₹0
+        </b>
+
+      </div>
+
+
+      <div class="stat money">
+
+        <span>
+          Average salary
+        </span>
+
+        <b id="statAvg">
+          ₹0
+        </b>
+
+      </div>
+
+
+      <div class="stat top">
+
+        <span>
+          Highest paid
+        </span>
+
+        <b id="statTop">
+          —
+        </b>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         SEARCH
+    ================================================== -->
+
+    <div class="controls">
+
+      <input
+        type="text"
+        id="searchBox"
+        placeholder="Search by name, email or department"
+      >
+
+
+      <button
+        class="primary"
+        id="searchBtn"
+      >
+        Search
+      </button>
+
+
+      <button id="clearSearchBtn">
+        Clear
+      </button>
+
+    </div>
+
+
+    <!-- ==================================================
+         DEPARTMENT FILTER
+    ================================================== -->
+
+    <div
+      class="chips"
+      id="deptChips"
+    ></div>
+
+
+    <!-- ==================================================
+         SORT DROPDOWN
+    ================================================== -->
+
+    <div class="sortbar">
+
+      <label for="sortSelect">
+        Sort:
+      </label>
+
+
+      <select id="sortSelect">
+
+        <option value="">
+          Default order
+        </option>
+
+        <option value="name-asc">
+          Name ↑
+        </option>
+
+        <option value="name-desc">
+          Name ↓
+        </option>
+
+        <option value="age-asc">
+          Age ↑
+        </option>
+
+        <option value="age-desc">
+          Age ↓
+        </option>
+
+        <option value="salary-asc">
+          Salary ↑
+        </option>
+
+        <option value="salary-desc">
+          Salary ↓
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ==================================================
+         EMPLOYEE COUNT
+    ================================================== -->
+
+    <div class="countline">
+
+      <span id="countLabel">
+        Total employees: 0
+      </span>
+
+
+      <span id="deptBreakdown"></span>
+
+    </div>
+
+
+    <!-- ==================================================
+         EMPLOYEE CARDS
+    ================================================== -->
+
+    <main id="employeeGrid"></main>
+
+
+    <!-- ==================================================
+         ADD EMPLOYEE
+    ================================================== -->
+
+    <section class="addsection">
+
+      <h2>
+        Add employee
+      </h2>
+
+
+      <p class="lede">
+
+        New records are added to the same array the
+        dashboard reads from, so the count, salary totals
+        and filters update straight away.
+
+      </p>
+
+
+      <div class="formgrid">
+
+
+        <!-- NAME -->
+
+        <div class="field">
+
+          <label for="inName">
+            Name
+          </label>
+
+
+          <input
+            type="text"
+            id="inName"
+            placeholder="Naveen Kumar"
+          >
+
+
+          <div
+            class="err"
+            id="errName"
+          ></div>
+
+        </div>
+
+
+        <!-- AGE -->
+
+        <div class="field">
+
+          <label for="inAge">
+            Age
+          </label>
+
+
+          <input
+            type="number"
+            id="inAge"
+            placeholder="25"
+            min="19"
+          >
+
+
+          <div
+            class="err"
+            id="errAge"
+          ></div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="field">
+
+          <label for="inEmail">
+            Email
+          </label>
+
+
+          <input
+            type="email"
+            id="inEmail"
+            placeholder="naveen@gmail.com"
+          >
+
+
+          <div
+            class="err"
+            id="errEmail"
+          ></div>
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="field">
+
+          <label for="inPhone">
+            Phone Number
+          </label>
+
+
+          <input
+            type="tel"
+            id="inPhone"
+            placeholder="+91 9876543210"
+          >
+
+
+          <div
+            class="err"
+            id="errPhone"
+          ></div>
+
+        </div>
+
+
+        <!-- DEPARTMENT -->
+
+        <div class="field">
+
+          <label for="inDept">
+            Department
+          </label>
+
+
+          <select id="inDept">
+
+            <option value="">
+              Select department
+            </option>
+
+            <option value="IT">
+              IT
+            </option>
+
+            <option value="HR">
+              HR
+            </option>
+
+            <option value="Finance">
+              Finance
+            </option>
+
+            <option value="Marketing">
+              Marketing
+            </option>
+
+          </select>
+
+
+          <div
+            class="err"
+            id="errDept"
+          ></div>
+
+        </div>
+
+
+        <!-- SALARY -->
+
+        <div class="field">
+
+          <label for="inSalary">
+            Monthly salary (₹)
+          </label>
+
+
+          <input
+            type="number"
+            id="inSalary"
+            placeholder="50000"
+            min="0"
+          >
+
+
+          <div
+            class="err"
+            id="errSalary"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FORM ACTIONS -->
+
+      <div class="formactions">
+
+        <button
+          class="primary"
+          id="addBtn"
+        >
+          Add employee
+        </button>
+
+
+        <button id="resetBtn">
+          Clear form
+        </button>
+
+
+        <span id="formMessage"></span>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script src="JsFinalTask.js"></script>
+
+</body>
+
+</html>
